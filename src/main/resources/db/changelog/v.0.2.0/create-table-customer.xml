@@ -20,7 +20,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="address" type="varchar">
+            <column name="active" type="boolean">
                 <constraints nullable="false"/>
             </column>
 
