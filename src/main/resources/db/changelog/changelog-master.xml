@@ -8,3 +8,4 @@
     <include file="v.0.2.0/changelog.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
+
