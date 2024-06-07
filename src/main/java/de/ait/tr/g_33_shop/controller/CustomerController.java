@@ -75,7 +75,7 @@ public class CustomerController {
     service.removeProductFromCustomersCart(customerId, productId);
     }
 
-    @DeleteMapping("/deletecustomercart")
+    @DeleteMapping("/deletecart")
     public void clearCustomersCart(@RequestParam Long customerId) {
         service.clearCustomersCart(customerId);
     }
