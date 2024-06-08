@@ -1,6 +1,7 @@
 package de.ait.tr.g_33_shop.service;
 
 import de.ait.tr.g_33_shop.domain.entity.Customer;
+import de.ait.tr.g_33_shop.repository.CustomerRepository;
 import de.ait.tr.g_33_shop.service.interfaces.CustomerService;
 import org.springframework.stereotype.Service;
 
@@ -12,22 +13,27 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService
 {
+    private CustomerRepository customerRepository;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
     public Customer save(Customer customer) {
-        //TODO обраьтьбся к репозиторию
-        customer.setName("Vasya");
-        return customer;
+        return   customerRepository.save(customer);
     }
 
     @Override
     public List<Customer> getAllActiveCustomers() {
-        List<Customer> customers = new ArrayList<Customer>();
-        Customer customer = new Customer();
-        customer.setActive(true);
-        customer.setName("Kolya");
-        customers.add(customer);
-        return customers;
+        List<Customer> activeCustomers = new ArrayList<>();
+        List<Customer> allCustomers = customerRepository.findAll();
+       for (Customer customer : allCustomers) {
+           if (customer.isActive()) {
+               activeCustomers.add(customer);
+           }
+       }
+        return  activeCustomers;
     }
 
     @Override
@@ -46,11 +52,6 @@ public class CustomerServiceImpl implements CustomerService
     }
 
     @Override
-    public void deleteByName(String title) {
-
-    }
-
-    @Override
     public void restoreById(Long id) {
         System.out.println("Restore Customer: "+id);
     }
@@ -60,31 +61,5 @@ public class CustomerServiceImpl implements CustomerService
         return 0;
     }
 
-    @Override
-    public BigDecimal getTotalCostOfCustomersProducts(Long customerId) {
-
-        return new BigDecimal(36.6);
-    }
-
-
-    @Override
-    public BigDecimal getAverageCostOfCustomersProducts(Long customerId) {
-        return null;
-    }
-
-    @Override
-    public void addProductToCustomersCart(Long customerId, Long productId) {
-
-    }
-
-    @Override
-    public void removeProductFromCustomersCart(Long customerId, Long productId) {
-
-    }
-
-    @Override
-    public void clearCustomersCart(Long customerId) {
-
-    }
 
 }

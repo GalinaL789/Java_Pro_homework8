@@ -43,8 +43,21 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public Product update(Product product) {
-        return null;
+        // Извлекаем текущий продукт из базы данных
+        Product existingProduct = repository.findById(product.getId()).orElseThrow(() -> new RuntimeException("Product not found"));
+
+        // Проверяем, что только поля price или active изменены
+        if (!product.getTitle().equals(existingProduct.getTitle()))  {
+            throw new RuntimeException("Only price or active can be changed");
+        }
+        // Обновляем существующий продукт только в случае, если изменения допустимы
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setActive(product.isActive());
+
+        // Сохраняем изменения
+        return repository.save(existingProduct);
     }
+
 
     @Override
     public void deleteById(Long id) {

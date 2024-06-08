@@ -17,6 +17,7 @@ public class CustomerController {
         this.service = service;
     }
 
+
     @PostMapping
     public Customer save(@RequestBody Customer customer) {
         return service.save(customer);
@@ -44,7 +45,7 @@ public class CustomerController {
         if (id != null) {
             service.deleteById(id);
         } else if (name != null) {
-            service.deleteByName(name);
+            // service.deleteByName(name);
         }
     }
 
@@ -61,24 +62,25 @@ public class CustomerController {
 
     @GetMapping("/averagecost")
     public BigDecimal getAverageCostOfCustomersProducts(@RequestParam Long customerId) {
-        return service.getAverageCostOfCustomersProducts(customerId);
+        return null;
+        //service.getAverageCostOfCustomersProducts(customerId);
     }
 
     @PutMapping("/addproduct")
     public void addProductToCustomersCart(@RequestParam Long customerId, @RequestParam
     Long productId) {
-    service.addProductToCustomersCart(customerId, productId);
+        //service.addProductToCustomersCart(customerId, productId);
     }
 
     @DeleteMapping("/deletedproduct")
     public void removeProductFromCustomersCart(@RequestParam Long customerId, @RequestParam Long productId) {
-    service.removeProductFromCustomersCart(customerId, productId);
+        //service.removeProductFromCustomersCart(customerId, productId);
     }
 
     @DeleteMapping("/deletecart")
     public void clearCustomersCart(@RequestParam Long customerId) {
-        service.clearCustomersCart(customerId);
+        //service.clearCustomersCart(customerId);
     }
 
-    }
+}
 

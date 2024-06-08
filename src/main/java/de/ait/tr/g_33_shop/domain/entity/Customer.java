@@ -1,17 +1,25 @@
 package de.ait.tr.g_33_shop.domain.entity;
 
-import java.math.BigDecimal;
+import jakarta.persistence.*;
+
 import java.util.Objects;
-
+@Entity
+@Table(name="customer")
 public class Customer {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
-    private String name;
-    private boolean active;
 
+    @Column(name="name")
+    private String name;
+
+    @Column(name="active")
+    private boolean active;
 
     @Override
     public String toString() {
-        return String.format("Product: id - %d, name- %s, active - %s",
+        return String.format("Customer: id - %d, name- %s, active - %s",
                 id, name, active ? "yes" : "no");
     }
 
@@ -19,20 +27,20 @@ public class Customer {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public void setActive(boolean active) {

@@ -12,12 +12,12 @@ public interface CustomerService {
  Customer getById(Long id);
  Customer update(Customer customer);
  void deleteById(Long id);
- void deleteByName(String name);
+ //void deleteByName(String name);
  void restoreById(Long id);
  long getActiveCustomersNumber();
- BigDecimal getTotalCostOfCustomersProducts(Long customerId);
- BigDecimal getAverageCostOfCustomersProducts(Long customerId);
- void addProductToCustomersCart(Long customerId, Long productId);
- void removeProductFromCustomersCart(Long customerId, Long productId);
- void clearCustomersCart(Long customerId);
+ //BigDecimal getTotalCostOfCustomersProducts(Long customerId);
+ //BigDecimal getAverageCostOfCustomersProducts(Long customerId);
+ //void addProductToCustomersCart(Long customerId, Long productId);
+ //void removeProductFromCustomersCart(Long customerId, Long productId);
+ //void clearCustomersCart(Long customerId);
 }
