@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService
 
     @Override
     public Customer getById(Long id) {
-        return null;
+        return customerRepository.getOne(id);
     }
 
     @Override
