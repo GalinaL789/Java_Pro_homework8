@@ -25,17 +25,33 @@ public class CustomerController {
         return service.save(customer);
     }
 
-    @GetMapping
-    public List<Customer> get(@RequestParam(required = false) Long id) {
-        if (id == null) {
-            return service.getAllActiveCustomers();
+//    @GetMapping
+//    public List<Customer> get(@RequestParam(required = false) Long id) {
+//        if (id == null) {
+//            return service.getAllActiveCustomers();
+//        } else {
+//            Customer customer = service.getById(id);
+//           List<Customer> customers = new ArrayList<>();
+//           customers.add(customer);
+//           return customers;
+//        }
+//    }
+@GetMapping
+public List<Customer> get(@RequestParam(required = false) Long id) {
+    if (id == null) {
+        return service.getAllActiveCustomers();
+    } else {
+        Customer customer = service.getById(id);
+        if (customer != null) {
+            List<Customer> customers = new ArrayList<>();
+            customers.add(customer);
+            return customers;
         } else {
-            Customer customer = service.getById(id);
-           List<Customer> customers = new ArrayList<>();
-           customers.add(customer);
-           return customers;
+            return new ArrayList<>(); // Возвращаем пустой список, если сущность не найдена
         }
     }
+}
+
     @PutMapping
     public Customer update(@RequestBody Customer customer) {
         return service.update(customer);

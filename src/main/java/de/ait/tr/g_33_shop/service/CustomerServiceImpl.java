@@ -36,9 +36,14 @@ public class CustomerServiceImpl implements CustomerService
         return  activeCustomers;
     }
 
+//    @Override
+//    public Customer getById(Long id) {
+//        return customerRepository.getOne(id);
+//    }
+
     @Override
     public Customer getById(Long id) {
-        return customerRepository.getOne(id);
+        return customerRepository.findById(id).orElse(null);
     }
 
     @Override
