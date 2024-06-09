@@ -54,7 +54,6 @@ public List<Customer> get(@RequestParam(required = false) Long id) {
 
     @PutMapping
     public Customer update(@RequestBody Customer customer) {
-
         return service.update(customer);
     }
 

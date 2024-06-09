@@ -20,9 +20,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(Customer customer) {
+        customer.setId(null);
+        customer.setActive(true);
         return customerRepository.save(customer);
     }
-
 //    @Override
 //    public List<Customer> getAllActiveCustomers() {
 //        List<Customer> activeCustomers = new ArrayList<>();
@@ -43,23 +44,19 @@ public class CustomerServiceImpl implements CustomerService {
                 .toList();
     }
 
-//    @Override
+//        @Override
 //    public Customer getById(Long id) {
-//        return customerRepository.getOne(id);
+//        return customerRepository.findById(id).orElse(null);
+//
 //    }
-
-        @Override
-    public Customer getById(Long id) {
-        return customerRepository.findById(id).orElse(null);
+    @Override
+   public Customer getById(Long id) {
+   Customer customer = customerRepository.findById(id).orElse(null);
+       if (customer != null && customer.isActive()) {
+          return customer;
+       }
+       return null;
     }
-//    @Override
-//    public Customer getById(Long id) {
-//        Customer customer = customerRepository.findById(id).orElse(null);
-//        if (customer != null && customer.isActive()) {
-//            return customer;
-//        }
-//        return null;
-//    }
 
     @Override
     public Customer update(Customer customer) {
