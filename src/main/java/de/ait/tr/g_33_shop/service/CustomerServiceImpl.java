@@ -1,19 +1,18 @@
 package de.ait.tr.g_33_shop.service;
 
 import de.ait.tr.g_33_shop.domain.entity.Customer;
+import de.ait.tr.g_33_shop.domain.entity.Product;
 import de.ait.tr.g_33_shop.repository.CustomerRepository;
 import de.ait.tr.g_33_shop.service.interfaces.CustomerService;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
-public class CustomerServiceImpl implements CustomerService
-{
-    private CustomerRepository customerRepository;
+public class CustomerServiceImpl implements CustomerService {
+    private final CustomerRepository customerRepository;
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -21,29 +20,47 @@ public class CustomerServiceImpl implements CustomerService
 
     @Override
     public Customer save(Customer customer) {
-        return   customerRepository.save(customer);
+        customer.setId(null);
+        customer.setActive(true);
+        return customerRepository.save(customer);
     }
+//    @Override
+//    public List<Customer> getAllActiveCustomers() {
+//        List<Customer> activeCustomers = new ArrayList<>();
+//        List<Customer> allCustomers = customerRepository.findAll();
+//        for (Customer customer : allCustomers) {
+//            if (customer.isActive()) {
+//                activeCustomers.add(customer);
+//            }
+//        }
+//        return activeCustomers;
+//    }
 
     @Override
     public List<Customer> getAllActiveCustomers() {
-        List<Customer> activeCustomers = new ArrayList<>();
-        List<Customer> allCustomers = customerRepository.findAll();
-       for (Customer customer : allCustomers) {
-           if (customer.isActive()) {
-               activeCustomers.add(customer);
-           }
-       }
-        return  activeCustomers;
+        return customerRepository.findAll()
+                .stream()
+                .filter(Customer::isActive)
+                .toList();
     }
 
+//        @Override
+//    public Customer getById(Long id) {
+//        return customerRepository.findById(id).orElse(null);
+//
+//    }
     @Override
-    public Customer getById(Long id) {
-        return null;
+   public Customer getById(Long id) {
+   Customer customer = customerRepository.findById(id).orElse(null);
+       if (customer != null && customer.isActive()) {
+          return customer;
+       }
+       return null;
     }
 
     @Override
     public Customer update(Customer customer) {
-        return null;
+        return customerRepository.save(customer);
     }
 
     @Override
@@ -53,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService
 
     @Override
     public void restoreById(Long id) {
-        System.out.println("Restore Customer: "+id);
+        System.out.println("Restore Customer: " + id);
     }
 
     @Override
