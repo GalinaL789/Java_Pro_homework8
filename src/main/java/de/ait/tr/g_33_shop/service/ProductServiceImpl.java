@@ -1,63 +1,57 @@
 package de.ait.tr.g_33_shop.service;
 
+import de.ait.tr.g_33_shop.domain.dto.ProductDto;
 import de.ait.tr.g_33_shop.domain.entity.Product;
 import de.ait.tr.g_33_shop.repository.ProductRepository;
 import de.ait.tr.g_33_shop.service.interfaces.ProductService;
+import de.ait.tr.g_33_shop.service.mapping.ProductMappingService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
     private ProductRepository repository;
+    private ProductMappingService mappingService;
 
-    public ProductServiceImpl(ProductRepository repository) {
+    public ProductServiceImpl(ProductRepository repository, ProductMappingService mappingService) {
         this.repository = repository;
+        this.mappingService = mappingService;
     }
 
     @Override
-    public Product save(Product product) {
-        product.setId(null);
-        product.setActive(true);
-        return repository.save(product);
+    public ProductDto save(ProductDto dto) {
+        Product entity = mappingService.mapDtoToEntity(dto);
+        repository.save(entity);
+        return mappingService.mapEntityToDto(entity);
     }
 
     @Override
-    public List<Product> getAllActiveProducts() {
-        //List<Product> products = new ArrayList<>();
+    public List<ProductDto> getAllActiveProducts() {
         return repository.findAll()
                 .stream()
                 .filter(Product::isActive)
+                .map(mappingService::mapEntityToDto)
                 .toList();
     }
 
     @Override
-    public Product getById(Long id) {
+    public ProductDto getById(Long id) {
         Product product = repository.findById(id).orElse(null);
+
         if (product != null && product.isActive()) {
-            return product;
+            return mappingService.mapEntityToDto(product);
         }
+
         return null;
     }
+
     @Override
-    public Product update(Product product) {
-        // Извлекаем текущий продукт из базы данных
-        Product existingProduct = repository.findById(product.getId()).orElseThrow(() -> new RuntimeException("Product not found"));
-
-        // Проверяем, что только поля price или active изменены
-        if (!product.getTitle().equals(existingProduct.getTitle()))  {
-            throw new RuntimeException("Only price or active can be changed");
-        }
-        // Обновляем существующий продукт только в случае, если изменения допустимы
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setActive(product.isActive());
-
-        // Сохраняем изменения
-        return repository.save(existingProduct);
+    public ProductDto update(ProductDto product) {
+        return null;
     }
-
 
     @Override
     public void deleteById(Long id) {

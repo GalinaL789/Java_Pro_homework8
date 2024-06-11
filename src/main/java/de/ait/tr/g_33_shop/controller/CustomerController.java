@@ -1,7 +1,9 @@
 package de.ait.tr.g_33_shop.controller;
 
+import de.ait.tr.g_33_shop.domain.dto.CustomerDto;
 import de.ait.tr.g_33_shop.domain.entity.Customer;
 import de.ait.tr.g_33_shop.service.interfaces.CustomerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
+@Tag(name = "Customer controller", description = "Controller for various operations with Customers")
+
 public class CustomerController {
 
     private final CustomerService service;
@@ -21,7 +25,7 @@ public class CustomerController {
 
 
     @PostMapping
-    public Customer save(@RequestBody Customer customer) {
+    public CustomerDto save(@RequestBody CustomerDto customer) {
         return service.save(customer);
     }
 
@@ -37,13 +41,13 @@ public class CustomerController {
 //        }
 //    }
 @GetMapping
-public List<Customer> get(@RequestParam(required = false) Long id) {
+public List<CustomerDto> get(@RequestParam(required = false) Long id) {
     if (id == null) {
         return service.getAllActiveCustomers();
     } else {
-        Customer customer = service.getById(id);
+        CustomerDto customer = service.getById(id);
         if (customer != null) {
-            List<Customer> customers = new ArrayList<>();
+            List<CustomerDto> customers = new ArrayList<>();
             customers.add(customer);
             return customers;
         } else {
@@ -53,7 +57,7 @@ public List<Customer> get(@RequestParam(required = false) Long id) {
 }
 
     @PutMapping
-    public Customer update(@RequestBody Customer customer) {
+    public CustomerDto update(@RequestBody CustomerDto customer) {
         return service.update(customer);
     }
 
