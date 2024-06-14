@@ -1,6 +1,7 @@
 package de.ait.tr.g_33_shop.controller;
 
 import de.ait.tr.g_33_shop.domain.dto.ProductDto;
+import de.ait.tr.g_33_shop.domain.entity.Product;
 import de.ait.tr.g_33_shop.service.interfaces.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -54,11 +55,11 @@ public class ProductController {
         }
     }
 
-//    @GetMapping("/all")
-//    public List<Product> getAll() {
-//        // TODO обращаемся к сервису и запрашиваем все продукты
-//        return null;
-//    }
+   @GetMapping("/all")
+    public List<ProductDto> getAll() {
+        // TODO обращаемся к сервису и запрашиваем все продукты
+        return service.getAllActiveProducts();
+    }
 
     // Update: PUT -> localhost:8080/products
 

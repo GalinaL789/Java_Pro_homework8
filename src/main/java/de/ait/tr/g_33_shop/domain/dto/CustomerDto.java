@@ -19,9 +19,6 @@ public class CustomerDto {
     @Schema(description = "Customer name", example = "Kolya")
     private String name;
 
-    @Schema(description = "Product price", example = "190.00")
-    private BigDecimal price;
-
     public Long getId() {
         return id;
     }
