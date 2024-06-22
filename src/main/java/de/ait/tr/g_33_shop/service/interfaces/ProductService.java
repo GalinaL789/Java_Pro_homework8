@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
+
     ProductDto save(ProductDto product);
     List<ProductDto> getAllActiveProducts();
     ProductDto getById(Long id);
@@ -16,5 +17,4 @@ public interface ProductService {
     long getAllActiveProductsQuantity();
     BigDecimal getAllActiveProductsTotalPrice();
     BigDecimal getAllActiveProductsAveragePrice();
-
 }

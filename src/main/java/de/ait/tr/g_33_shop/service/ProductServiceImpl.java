@@ -2,6 +2,10 @@ package de.ait.tr.g_33_shop.service;
 
 import de.ait.tr.g_33_shop.domain.dto.ProductDto;
 import de.ait.tr.g_33_shop.domain.entity.Product;
+import de.ait.tr.g_33_shop.exception_handling.exceptions.FirstTestException;
+import de.ait.tr.g_33_shop.exception_handling.exceptions.FourthTestException;
+import de.ait.tr.g_33_shop.exception_handling.exceptions.SecondTestException;
+import de.ait.tr.g_33_shop.exception_handling.exceptions.ThirdTestException;
 import de.ait.tr.g_33_shop.repository.ProductRepository;
 import de.ait.tr.g_33_shop.service.interfaces.ProductService;
 import de.ait.tr.g_33_shop.service.mapping.ProductMappingService;
@@ -21,10 +25,16 @@ public class ProductServiceImpl implements ProductService {
         this.mappingService = mappingService;
     }
 
+
     @Override
     public ProductDto save(ProductDto dto) {
         Product entity = mappingService.mapDtoToEntity(dto);
-        repository.save(entity);
+        try {
+            repository.save(entity);
+        }
+        catch (Exception e) {
+            throw new FourthTestException(e.getMessage());
+        }
         return mappingService.mapEntityToDto(entity);
     }
 
@@ -45,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
             return mappingService.mapEntityToDto(product);
         }
 
-        return null;
+        throw new ThirdTestException("this is third test exception");
     }
 
     @Override

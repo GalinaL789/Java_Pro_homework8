@@ -1,7 +1,6 @@
 package de.ait.tr.g_33_shop.controller;
 
 import de.ait.tr.g_33_shop.domain.dto.CustomerDto;
-import de.ait.tr.g_33_shop.domain.entity.Customer;
 import de.ait.tr.g_33_shop.service.interfaces.CustomerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
