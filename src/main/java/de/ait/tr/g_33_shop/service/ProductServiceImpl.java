@@ -2,10 +2,8 @@ package de.ait.tr.g_33_shop.service;
 
 import de.ait.tr.g_33_shop.domain.dto.ProductDto;
 import de.ait.tr.g_33_shop.domain.entity.Product;
-import de.ait.tr.g_33_shop.exception_handling.exceptions.FirstTestException;
 import de.ait.tr.g_33_shop.exception_handling.exceptions.FourthTestException;
-import de.ait.tr.g_33_shop.exception_handling.exceptions.SecondTestException;
-import de.ait.tr.g_33_shop.exception_handling.exceptions.ThirdTestException;
+import de.ait.tr.g_33_shop.exception_handling.exceptions.NotActiveProductsException;
 import de.ait.tr.g_33_shop.repository.ProductRepository;
 import de.ait.tr.g_33_shop.service.interfaces.ProductService;
 import de.ait.tr.g_33_shop.service.mapping.ProductMappingService;
@@ -39,14 +37,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+
     public List<ProductDto> getAllActiveProducts() {
-        return repository.findAll()
+        List<ProductDto> productDtos=repository.findAll()
                 .stream()
                 .filter(Product::isActive)
                 .map(mappingService::mapEntityToDto)
                 .toList();
-    }
+        if(productDtos.size()==0) {
+            throw new NotActiveProductsException("There is no active products");
+        }
 
+            return productDtos;
+        }
     @Override
     public ProductDto getById(Long id) {
         Product product = repository.findById(id).orElse(null);
@@ -55,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
             return mappingService.mapEntityToDto(product);
         }
 
-        throw new ThirdTestException("this is third test exception");
+        throw new NotActiveProductsException("the product is not found");
     }
 
     @Override
