@@ -3,6 +3,7 @@ package de.ait.tr.g_33_shop.controller;
 import de.ait.tr.g_33_shop.domain.dto.ProductDto;
 import de.ait.tr.g_33_shop.domain.entity.Role;
 import de.ait.tr.g_33_shop.domain.entity.User;
+import de.ait.tr.g_33_shop.repository.ProductRepository;
 import de.ait.tr.g_33_shop.repository.RoleRepository;
 import de.ait.tr.g_33_shop.repository.UserRepository;
 import de.ait.tr.g_33_shop.security.sec_dto.TokenResponseDto;
@@ -33,6 +34,8 @@ class ProductControllerTest {
 
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     private TestRestTemplate template;
     private HttpHeaders headers;
@@ -58,6 +61,8 @@ class ProductControllerTest {
     // Bearer 987f8snjsbfsf87fshfjbaf8fy7sgfsbfhsdf
     private final String BEARER_PREFIX = "Bearer ";
     private final String AUTH_HEADER_NAME = "Authorization";
+
+    private final String ID_PARAM_NAME="?id=";
 
     @BeforeEach
     public void setUp() {
@@ -186,8 +191,8 @@ class ProductControllerTest {
                 .exchange(url, HttpMethod.POST, request, ProductDto.class);
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has unexpected status");
         assertNotNull(response.getBody(), "Response body is null");
-        assertEquals("Test product", response.getBody().getTitle(), "Product name does not match");
-        // TODO домашнее задание
+        assertEquals(TEST_PRODUCT_TITLE, response.getBody().getTitle(), "Product name does not match");
+        savedProductId = response.getBody().getId();
     }
 
     @Test
@@ -248,37 +253,17 @@ class ProductControllerTest {
     @Test
     @Order(5)
     public void positiveGettingProductByIdWithCorrectToken() {
-        String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME + "/" + 1; // Используем сохраненный ID продукта
-
-        // Инициализация заголовков с правильным токеном
-        HttpHeaders headers = new HttpHeaders();
-        headers.put(AUTH_HEADER_NAME, List.of(adminAccessToken));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        // Создание запроса
-        HttpEntity<Void> request = new HttpEntity<>(headers);
-
-        // Отправка GET-запроса
-        ResponseEntity<ProductDto> response = template.exchange(url, HttpMethod.GET, request, ProductDto.class);
-
-        // Проверка статуса ответа
+        String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME + ID_PARAM_NAME + savedProductId;
+        headers.put(AUTH_HEADER_NAME, List.of(userAccessToken));
+        HttpEntity<ProductDto> request = new HttpEntity<>(headers);
+        ResponseEntity<ProductDto> response = template
+                .exchange(url, HttpMethod.GET, request, ProductDto.class);
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Response has unexpected status");
         assertNotNull(response.getBody(), "Response body is null");
-        assertEquals("Valid Product Name", response.getBody().getTitle(), "Product name does not match");
+        assertEquals(TEST_PRODUCT_TITLE, response.getBody().getTitle(), "Product name does not match");
 
-        // TODO: Удаляем из БД сохранённый тестовый продукт
-        //this.deleteTestProduct(savedProductId);
+        productRepository.deleteById(savedProductId);
     }
 
-//        private void deleteTestProduct(Long Id){
-//            String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME + "/" + Id;
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.put(AUTH_HEADER_NAME, List.of(adminAccessToken));
-//            headers.setContentType(MediaType.APPLICATION_JSON);
-//            HttpEntity<Void> request = new HttpEntity<>(headers);
-//            ResponseEntity<Void> response = template.exchange(url, HttpMethod.DELETE, request, Void.class);
-//            // Проверка статуса ответа
-//            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode(), "Failed to delete test product");
-//        }
-        // TODO удаляем из БД сохранённый тестовый продукт
+
     }
