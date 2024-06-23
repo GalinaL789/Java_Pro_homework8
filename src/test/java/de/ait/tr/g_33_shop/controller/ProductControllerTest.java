@@ -42,7 +42,7 @@ class ProductControllerTest {
     private ProductDto testProduct;
     private String adminAccessToken;
     private String userAccessToken;
-    private Long savedProductId;
+    private static Long savedProductId;
 
     private final String TEST_PRODUCT_TITLE = "Test product";
     private final BigDecimal TEST_PRODUCT_PRICE = new BigDecimal(777);
@@ -200,7 +200,7 @@ class ProductControllerTest {
     public void negativeGettingProductByIdWithoutAuthorization() {
         // TODO домашнее задание
 
-        String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME + "/1"; // Пример URL с ID продукта
+        String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME + savedProductId; // Пример URL с ID продукта
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -235,7 +235,7 @@ class ProductControllerTest {
     @Test
     @Order(4)
     public void negativeGettingProductByIdWithIncorrectToken() {
-        String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME + "/1"; // Пример URL с ID продукта
+        String url = URL_PREFIX + port + PRODUCTS_RESOURCE_NAME + savedProductId; // Пример URL с ID продукта
 
         // Инициализация заголовков с неправильным токеном
         HttpHeaders headers = new HttpHeaders();
