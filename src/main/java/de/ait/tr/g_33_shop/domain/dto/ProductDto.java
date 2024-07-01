@@ -15,6 +15,7 @@ public class ProductDto {
             accessMode = Schema.AccessMode.READ_ONLY
     )
     private Long id;
+    private String image;
 
     @Schema(description = "Product title", example = "Banana")
     private String title;
@@ -48,21 +49,30 @@ public class ProductDto {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductDto that = (ProductDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(price, that.price);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, price);
-    }
-
-    @Override
     public String toString() {
         return String.format("Product DTO: id - %d, title - %s, price - %s",
                 id, title, price);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDto that = (ProductDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(image, that.image) && Objects.equals(title, that.title) && Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, image, title, price);
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
 }

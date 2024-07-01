@@ -1,9 +1,7 @@
 package de.ait.tr.g_33_shop.domain.entity;
-
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -31,6 +29,28 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "active")
+    private boolean active;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public Long getId() {
         return id;
@@ -76,12 +96,12 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+        return active == user.active && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, roles);
+        return Objects.hash(id, username, password, roles, email, active);
     }
 
     @Override
@@ -90,9 +110,16 @@ public class User implements UserDetails {
                 id, username, roles == null ? "empty" : roles);
     }
 
-//     //Метод для получения зашифрованного пароля
-//     //для добавления пользователей в БД вручную
+    // Метод для получения зашифрованного пароля
+    // для добавления пользователей в БД вручную
 //    public static void main(String[] args) {
 //        System.out.println(new BCryptPasswordEncoder().encode("111"));
 //    }
+
+    public void setActivated(boolean b) {
+    }
+
+    public boolean isActivated() {
+        return false;
+    }
 }

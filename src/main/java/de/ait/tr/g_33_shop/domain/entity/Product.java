@@ -48,6 +48,10 @@ public class Product {
     @Column(name = "active")
     private boolean active;
 
+    @Column(name="image")
+    private String image;
+
+
     public Long getId() {
         return id;
     }
@@ -80,17 +84,25 @@ public class Product {
         this.active = active;
     }
 
+    public String getImage() {
+        return image;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return active == product.active && Objects.equals(id, product.id) && Objects.equals(title, product.title) && Objects.equals(price, product.price);
+        return active == product.active && Objects.equals(id, product.id) && Objects.equals(title, product.title) && Objects.equals(price, product.price) && Objects.equals(image, product.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, price, active);
+        return Objects.hash(id, title, price, active, image);
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
