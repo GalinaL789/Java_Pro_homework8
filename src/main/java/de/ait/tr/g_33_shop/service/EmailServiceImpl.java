@@ -53,7 +53,7 @@ public class EmailServiceImpl implements EmailService {
 
     private String generateEmailText(User user) {
         try {
-            Template template = mailConfig.getTemplate("confirm_reg_mail.ftlh");
+            Template template = mailConfig.getTemplate("confirm-reg-mail.ftlh");
             String code = confirmationService.generateConfirmationCode(user);
             // localhost:8080/register?code=87fdsf6sf-fsffsd-f87sdf -> ссылка для завершения регистрации
             String url = "http://localhost:8080/register?code=" + code;

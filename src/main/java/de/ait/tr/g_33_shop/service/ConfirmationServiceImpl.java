@@ -23,7 +23,7 @@ public class ConfirmationServiceImpl implements ConfirmationService {
 //        LocalDateTime expired = LocalDateTime.now().plusDays(1);
 
         // Для целей тестирования:
-        LocalDateTime expired = LocalDateTime.now().plusMinutes(1);
+        LocalDateTime expired = LocalDateTime.now().plusMinutes(10);
         String code = UUID.randomUUID().toString();
         ConfirmationCode entity = new ConfirmationCode(code, expired, user);
         repository.save(entity);
