@@ -26,7 +26,8 @@ public class TokenService {
     private RoleRepository roleRepository;
 
     public TokenService(
-            @Value("${key.access}") String accessSecretPhrase,
+            //@Value("${key.access}") String accessSecretPhrase,
+            @Value("Tmu6OXdunqE7e4tVVWrJF3OdlxuJGcmvZt8yjSJqNXU=") String accessSecretPhrase,
             @Value("${key.refresh}") String refreshSecretPhrase,
             RoleRepository roleRepository
     ) {

@@ -45,7 +45,8 @@ public class SecurityConfig {
 //                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
 //                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
                                 .anyRequest().permitAll()
-                               // .requestMatchers(HttpMethod.PUT, "/products").permitAll()
+                        //TODO узнать почему ошибка 403 если заходит supplier
+//                               .requestMatchers(HttpMethod.GET, "system/products").hasRole("SUPPLIER")
 
                 ).build();
         return build;

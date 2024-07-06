@@ -78,11 +78,6 @@ public List<CustomerDto> get(@RequestParam(required = false) Long id) {
         service.restoreById(id);
     }
 
-    @GetMapping("/active")
-    public long getActiveCustomersNumber() {
-        // return service.getAllActiveCustomers().size();
-        return service.getActiveCustomersNumber();
-    }
 
     @GetMapping("/average-cost")
     public BigDecimal getAverageCostOfCustomersProducts(@RequestParam Long customerId) {
@@ -105,6 +100,39 @@ public List<CustomerDto> get(@RequestParam(required = false) Long id) {
     public void clearCustomersCart(@RequestParam Long customerId) {
         //service.clearCustomersCart(customerId);
     }
+    @GetMapping("/number")
+    public long getActiveCustomersNumber(){
+        return service.getActiveCustomersNumber();
+    }
 
-}
+    @GetMapping("{customerId}/products_cost")
+      public BigDecimal getTotalCostOfCustomersProducts(@PathVariable long customerId) {
+        return service.getTotalCostOfCustomersProducts(customerId);
+      }
+    @GetMapping("{customerId}/aver_product_cost")
+    public BigDecimal getAverageCostOfCustomersProducts(@PathVariable long customerId) {
+        return service.getAverageCostOfCustomersProducts(customerId);
+    }
+@PutMapping("{customerId}/add_product/{productId}")
+    public void addProductToCustomerCart(@PathVariable Long customerId,
+    @PathVariable Long productId)
+    {
+        service.addProductToCustomersCart(customerId, productId);
+    }
+
+@DeleteMapping("{customerId}/remove_product/{productId}")
+    public void removeProductFromCustomerCart(
+            @PathVariable Long customerId, @PathVariable Long productId)
+    {
+        service.removeProductFromCustomersCart(customerId, productId);
+    }
+
+    @DeleteMapping("{customerId}/clear_cart")
+    public void clearCustomerCart(@PathVariable long customerId) {
+        service.clearCustomersCart(customerId);
+    }
+
+
+    }
+
 

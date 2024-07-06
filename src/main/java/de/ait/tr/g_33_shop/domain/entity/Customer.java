@@ -48,6 +48,10 @@ public class Customer {
         this.active = active;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
