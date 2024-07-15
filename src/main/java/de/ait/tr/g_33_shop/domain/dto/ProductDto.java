@@ -22,6 +22,8 @@ public class ProductDto {
 
     @Schema(description = "Product price", example = "190.00")
     private BigDecimal price;
+    @Schema
+    private int quantity;
 
     public Long getId() {
         return id;
@@ -29,6 +31,19 @@ public class ProductDto {
 
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDto that = (ProductDto) o;
+        return quantity == that.quantity && Objects.equals(id, that.id) && Objects.equals(image, that.image) && Objects.equals(title, that.title) && Objects.equals(price, that.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, image, title, price, quantity);
     }
 
     public BigDecimal getPrice() {
@@ -54,25 +69,20 @@ public class ProductDto {
                 id, title, price);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductDto that = (ProductDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(image, that.image) && Objects.equals(title, that.title) && Objects.equals(price, that.price);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, image, title, price);
-    }
-
     public void setImage(String image) {
         this.image = image;
     }
 
     public String getImage() {
         return image;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
 }

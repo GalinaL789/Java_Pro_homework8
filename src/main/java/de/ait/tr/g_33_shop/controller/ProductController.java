@@ -1,6 +1,7 @@
 package de.ait.tr.g_33_shop.controller;
 
 import de.ait.tr.g_33_shop.domain.dto.ProductDto;
+import de.ait.tr.g_33_shop.domain.dto.ProductSupplyDto;
 import de.ait.tr.g_33_shop.domain.entity.Product;
 import de.ait.tr.g_33_shop.exception_handling.Response;
 import de.ait.tr.g_33_shop.exception_handling.exceptions.FirstTestException;
@@ -68,7 +69,6 @@ public class ProductController {
 
    @GetMapping("/all")
     public List<ProductDto> getAll() {
-        // TODO обращаемся к сервису и запрашиваем все продукты
         return service.getAllActiveProducts();
     }
 

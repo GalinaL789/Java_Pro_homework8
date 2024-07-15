@@ -42,6 +42,7 @@ public class ProductServiceImpl implements ProductService {
         return repository.findAll()
                 .stream()
                 .filter(Product::isActive)
+               // .map(mappingService::mapEntityToDto)
                 .map(mappingService::mapEntityToDto)
                 .toList();
     }
