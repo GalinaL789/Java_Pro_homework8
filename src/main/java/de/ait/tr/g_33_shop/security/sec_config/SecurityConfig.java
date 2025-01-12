@@ -41,10 +41,11 @@ public class SecurityConfig {
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(x -> x
 //                        .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
+                          .requestMatchers(HttpMethod.GET, "/products/all").hasRole("SUPPLIER")
 //                        .requestMatchers(HttpMethod.GET, "/products").hasAnyRole("ADMIN", "USER")
 //                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
-                                .anyRequest().permitAll()
+                          .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
+//                                .anyRequest().permitAll()
                         //TODO узнать почему ошибка 403 если заходит supplier
 //                               .requestMatchers(HttpMethod.GET, "system/products").hasRole("SUPPLIER")
 

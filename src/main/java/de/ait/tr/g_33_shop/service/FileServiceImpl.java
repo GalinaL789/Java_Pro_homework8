@@ -11,8 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
-@Service
-public class FileServiceImpl implements FileService {
+//@Service
+/*public class FileServiceImpl implements FileService {
     private final AmazonS3 client;
     private final ProductService productService;
 
@@ -49,4 +49,4 @@ public class FileServiceImpl implements FileService {
             String extension = sourceFileName.substring(dotIndex);
             return String.format("%s-%s%s", fileName, UUID.randomUUID(), extension);
         }
-}
+}*/

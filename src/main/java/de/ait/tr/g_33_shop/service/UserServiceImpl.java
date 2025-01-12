@@ -13,9 +13,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.print.DocFlavor;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
    @Override
    public void register(User user) {
-       //** note that user can regestration not thirst time fo ex/ if 1 time he dont have time for this
+       //** note that user can registration not thirst time fo ex/ if 1 time he dont have time for this
       user.setId(null);
         user.setPassword(encoder.encode(user.getPassword()));
 
@@ -89,6 +89,13 @@ public class UserServiceImpl implements UserService {
     });
 }
 
+        public static void main(String[] args) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String hash = encoder.encode("12345");
+            System.out.println(hash);
+        }
+
         //TODO user will be active after all checking
+
 
     }

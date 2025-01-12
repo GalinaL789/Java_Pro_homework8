@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class appConfig {
-    @Bean
+ /*   @Bean
     public AmazonS3 doClient(DOProperties doProperties)
     {
-        AWSCredentials credentials = new BasicAWSCredentials(doProperties.getAccessKey(),
+        /*AWSCredentials credentials = new BasicAWSCredentials(doProperties.getAccessKey(),
                 doProperties.getSecretKey());
         AwsClientBuilder.EndpointConfiguration endpointConfig=new AwsClientBuilder.EndpointConfiguration(
                 doProperties.getUrl(), doProperties.getRegion()
@@ -26,5 +26,5 @@ public class appConfig {
                 .withEndpointConfiguration(endpointConfig);
 
         return clientBuilder.build();
-    }
+    }*/
 }

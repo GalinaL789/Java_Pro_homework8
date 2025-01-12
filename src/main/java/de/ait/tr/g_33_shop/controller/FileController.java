@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController
-@RequestMapping("/files")
-public class FileController {
+//@RestController
+//@RequestMapping("/files")
+/*public class FileController {
     private final FileService service;
 
     public FileController(FileService service) {
@@ -22,4 +22,4 @@ public class FileController {
         String url = service.upload(file, productTitle);
         return new Response("Upload successful: url - " + url);
     }
-}
+}*/
